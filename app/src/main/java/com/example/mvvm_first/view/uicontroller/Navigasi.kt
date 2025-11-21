@@ -46,6 +46,7 @@ fun DataApp(
             composable(route = Navigasi.Detail.name) {
 
                 _root_ide_package_.com.example.mvvm_first.view.TampilData(
+                    statusUiSiswa = uiState.value,
                     onBackBtnClick = {
                         cancelAndBackToFormulir(navController)
                     }
