@@ -32,7 +32,8 @@ import com.example.mvvm_first.model.Siswa
 @Composable
 fun TampilData(
     statusUiSiswa: Siswa,
-    onBackBtnClick:()-> Unit
+    onBackBtnClick:()-> Unit,
+    modifier: Modifier = Modifier
 ) {
     val items = listOf(
         Pair(stringResource(id = R.string.nama_lengkap), second = statusUiSiswa.name),
@@ -57,12 +58,13 @@ fun TampilData(
             ) {
                 items.forEach { item ->
                     Column {
-                        Text(text = item.first.uppercase(), fontSize = 16.sp)
+                        Text(text = item.first.uppercase(), fontSize = 16.sp, color = colorResource(R.color.purple_200))
                         Text(
                             text = item.second,
                             fontWeight = FontWeight.Bold,
                             fontFamily = FontFamily.Cursive,
                             fontSize = 22.sp
+                            ,color = colorResource(id = R.color.purple_200)
                         )
                     }
                     HorizontalDivider(

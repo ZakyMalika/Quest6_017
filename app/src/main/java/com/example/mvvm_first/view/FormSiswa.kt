@@ -32,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.mvvm_first.R
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,10 +42,10 @@ fun FormIsian(
     OnSubmitBtnClick:(MutableList<String>)-> Unit,
     modifier: Modifier = Modifier
 ){
-    var textNama by remember { mutableStateOf("") }
+    var textNama by rememberSaveable { mutableStateOf("") }
     var textAlamat by remember { mutableStateOf("") }
     var textGender by remember { mutableStateOf("") }
-    val listData: MutableList<String> = remember { mutableListOf(textNama, textGender, textAlamat) }
+    val listData: MutableList<String> =   mutableListOf(textNama, textGender, textAlamat)
 
 
     Scaffold(modifier = Modifier,
@@ -101,7 +102,7 @@ fun FormIsian(
                 modifier = Modifier
                     .width(250.dp),
                 label = {Text(text = "Alamat")},
-                onValueChange = {textAlamat},
+                onValueChange = {textAlamat=it},
             )
             Spacer(modifier = Modifier.height(30.dp))
             Button (
