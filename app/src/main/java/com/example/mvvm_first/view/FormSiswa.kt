@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Button
 import androidx.compose.material3.DividerDefaults.Thickness
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -20,6 +21,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,14 +31,22 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.mvvm_first.R
+import androidx.compose.runtime.getValue
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormIsian(
-    jenisK:List<String> = listOf("Laki-laki","Perempuan"),
-    OnSubmitBtnClick:()-> Unit
+    jenisK:List<String> ,
+    OnSubmitBtnClick:(MutableList<String>)-> Unit,
+    modifier: Modifier = Modifier
 ){
+    var textNama by remember { mutableStateOf("") }
+    var textAlamat by remember { mutableStateOf("") }
+    var textGender by remember { mutableStateOf("") }
+    val listData: MutableList<String> = remember { mutableListOf(textNama, textGender, textAlamat) }
+
+
     Scaffold(modifier = Modifier,
         {
             TopAppBar(
@@ -48,13 +60,13 @@ fun FormIsian(
             horizontalAlignment = Alignment.CenterHorizontally)
         {
             OutlinedTextField(
-                value = "",
+                value = textNama,
                 singleLine = true,
                 modifier = Modifier
                     .padding(top = 20.dp)
                     .width(250.dp),
                 label = {Text(text = "Nama Lengkap")},
-                onValueChange = {},
+                onValueChange = {textNama = it},
             )
             HorizontalDivider(modifier = Modifier
                 .padding(20.dp)
@@ -62,10 +74,16 @@ fun FormIsian(
             Row {
                 jenisK.forEach {
                         item ->
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(modifier = Modifier.selectable(
+                        selected = textGender == item,
+                        onClick = {
+                            textGender=item
+                        })) {
                         RadioButton(
-                            selected = false,
-                            onClick = {item}
+                            selected = textGender == item,
+                            onClick = {
+                                textGender=item
+                            }
                         )
                         Text(text = item)
                     }
@@ -78,18 +96,19 @@ fun FormIsian(
                 color = Color.Red
             )
             OutlinedTextField(
-                value = "",
+                value = textAlamat,
                 singleLine = true,
                 modifier = Modifier
                     .width(250.dp),
                 label = {Text(text = "Alamat")},
-                onValueChange = {},
+                onValueChange = {textAlamat},
             )
             Spacer(modifier = Modifier.height(30.dp))
             Button (
                 modifier = Modifier.fillMaxWidth(1f)
                     .padding(all = 25.dp),
-                onClick = OnSubmitBtnClick
+                onClick =
+                {OnSubmitBtnClick(listData)}
             ) {
                 Text(stringResource(id = R.string.submit))
 
