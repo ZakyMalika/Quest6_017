@@ -38,11 +38,13 @@ fun DataApp(
                 _root_ide_package_.com.example.mvvm_first.view.FormIsian(
                     jenisK = jenisK.map{id -> konteks.resources.getString(id)},
                     OnSubmitBtnClick = {
+                        viewModel.setSiswa(it)
                         navController.navigate(Navigasi.Detail.name)
                     }
                 )
             }
             composable(route = Navigasi.Detail.name) {
+
                 _root_ide_package_.com.example.mvvm_first.view.TampilData(
                     onBackBtnClick = {
                         cancelAndBackToFormulir(navController)
