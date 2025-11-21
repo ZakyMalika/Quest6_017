@@ -30,6 +30,7 @@ import com.example.mvvm_first.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TampilData(
+    statusUiSiswa:String,
     onBackBtnClick:()-> Unit
 ) {
     val items = listOf(
